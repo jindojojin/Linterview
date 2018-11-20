@@ -19,10 +19,9 @@ namespace LinterViewTrack
         {
             while (true)
             {
-                if (SETTING.Instance.FLAG_CONNECTION_LOST == true)
+                if (GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST == true)
                 {
                     Thread.Sleep(SETTING.Instance.TIME_TO_RECONNECT);
-                    continue;
                 }
                 else
                 {
@@ -33,7 +32,7 @@ namespace LinterViewTrack
         }
         private void getDNS()
         {
-            Console.WriteLine("getting dns");
+            if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE)  Console.WriteLine("getting dns");
             Process p = new Process();
             p.StartInfo.FileName = "ipconfig";
             p.StartInfo.Arguments = "/displaydns";
@@ -43,15 +42,12 @@ namespace LinterViewTrack
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardInput = false;
             p.Start();
-            p.WaitForExit(1000);
-
-            //if(p.HasExited){
+            p.WaitForExit(2000);
             string output = p.StandardOutput.ReadToEnd();
             if (output == null || output == "") return;
-            Console.WriteLine("get dns done !");
+            if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE)  Console.WriteLine("get dns done !");
             if (isTransgressing(output))
             {
-                Console.WriteLine("getting dns");
                 Process p2 = new Process();
                 p2.StartInfo.FileName = "ipconfig";
                 p2.StartInfo.Arguments = "/flushdns";
@@ -71,9 +67,11 @@ namespace LinterViewTrack
             bool flag = false;
             foreach( WebSite a in GLOBAL_INSTANCE.Instance.DARKLIST)
             {
-                Console.WriteLine("Kiem tra "+ a.url);
+                if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("Kiem tra "+ a.url);
                 if (dnscache.Contains(a.url)){
-                    Console.WriteLine("vi pham: " + a.name);
+                    if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE)  Console.WriteLine("vi pham: " + a.name);
+                    if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("call to snitch");
+                    new Snitch(a);
                     flag = true;
                 }
             }

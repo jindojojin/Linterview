@@ -16,6 +16,7 @@ namespace LinterViewTrack
             setupApplication();
             GhostMan gm = new GhostMan();
             Thread follow = new Thread(gm.run);
+            GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST = true;
             follow.Start();
             while (true)
             {
@@ -34,28 +35,24 @@ namespace LinterViewTrack
                     client.BaseAddress = new Uri(SETTING.Instance.ServerUri);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    HttpResponseMessage res = await client.GetAsync("/");
+                    HttpResponseMessage res = await client.GetAsync(SETTING.Instance.AliveUri);
                     if (res.IsSuccessStatusCode)
                     {
                         string x = await res.Content.ReadAsStringAsync();
                         BannedSites a = JsonConvert.DeserializeObject<BannedSites>(x);
                         //List<string> list = new List<string>();
-                        foreach (WebSite ws in a.listBanned)
-                        {
-                            ws.url = "Record Name . . . . . : " + ws.url; // use that for string.contain() catch exactly from many record are quite same  ex: facebook.com & www1.facebook.com  => only catch facebook.com
-                        }
                         GLOBAL_INSTANCE.Instance.DARKLIST = a.listBanned;
                     }
                     else
                     {
 
                     }
-                    SETTING.Instance.FLAG_CONNECTION_LOST = false;
+                    GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST = false;
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Connection lost! sleep. Reconnect after "+SETTING.Instance.TIME_TO_RECONNECT+" milisecond");
-                    SETTING.Instance.FLAG_CONNECTION_LOST = true;
+                    if(SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("Connection lost! sleep. Reconnect after "+SETTING.Instance.TIME_TO_RECONNECT+" milisecond");
+                    GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST = true;
                     Thread.Sleep(SETTING.Instance.TIME_TO_RECONNECT);
                 }
             }
@@ -67,8 +64,10 @@ namespace LinterViewTrack
             SETTING.Instance.TIME_TO_RECHECK = 5000;
             SETTING.Instance.TIME_TO_RECONNECT = 10000;
             SETTING.Instance.TIME_TO_SEND_ALIVE_SIGNAL = 5000;
-            SETTING.Instance.FLAG_CONNECTION_LOST = true;
+            SETTING.Instance.SnitchUri = "/iamsorry";
+            SETTING.Instance.AliveUri = "/iamalive";
             SETTING.Instance.FLAG_IS_IN_DEBUG_MODE = true;
+            //if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("");
         }
     }
 }

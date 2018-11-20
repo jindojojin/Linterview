@@ -1,0 +1,23 @@
+{
+  "name": "server_node",
+  "version": "1.0.0",
+  "description": "server bai tap lon cac van de hien dai cua cntt",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongodb": "^3.1.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "truy",
+    "xuat",
+    "nguon",
+    "goc"
+  ],
+  "author": "linhtq",
+  "license": "ISC"
+}

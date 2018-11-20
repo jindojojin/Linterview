@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GhostMan.cs" />
+    <Compile Include="Snitch.cs" />
     <Compile Include="Template\BannedSites.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
