@@ -13,50 +13,32 @@ namespace LinterViewTrack
 {
     class Snitch
     {
-        public Snitch(WebSite website)
-        {
-            //try to resend if server is off but not over 3 times
-            for ( int i =0; i< 3; i++)
-            {
-                if (GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST == false)
-                {
-                    sendPOST(website).Wait();
-                    break;
-                }                    
-                else Thread.Sleep(SETTING.Instance.TIME_TO_RECONNECT);
-            }
-            
+        public Snitch()
+        {  
         }
 
-        private async Task sendPOST(WebSite webSite)
+        public async void snitch(WebSite webSite)
         {
-            using (var client = new HttpClient())
+            //try to resend if server is off but not over 3 times
+            for (int i = 0; i < 3; i++)
             {
-                // send "i am alive" signal and get the data setting
-                try
-                {
-                    client.BaseAddress = new Uri(SETTING.Instance.ServerUri);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    var content = new StringContent(JsonConvert.SerializeObject(webSite), Encoding.UTF8, "application/json");
-                    HttpResponseMessage res = await client.PostAsync(SETTING.Instance.SnitchUri,content);
-                    if (res.IsSuccessStatusCode)
-                    {
-                        if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("snitch sent message! =-------------------------------=");
-                    }
-                    else
-                    {
+                Violation vio = new Violation();
+                vio.userID = GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ID;
+                vio.webSite = webSite;
+                string x = await new HTTP_CONTROLER().SendPOST(vio, SETTING.Instance.SnitchUri);
+                //sendPOST(website).Wait();                    
+                //break;
+                if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine(x);
 
+                if (x != "") {
+                    if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine(x);
+                    if (x == "Unauthorized")
+                    {
+                        continue; // no problem with network, retry
                     }
-                    GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST = false;
+                    else return;  // success
                 }
-                catch (Exception e)
-                {
-                    if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("Connection lost! sleep. Reconnect after " + SETTING.Instance.TIME_TO_RECONNECT + " milisecond");
-
-                    GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST = true;
-                    Thread.Sleep(SETTING.Instance.TIME_TO_RECONNECT);
-                }
+                else Thread.Sleep(SETTING.Instance.TIME_TO_RECONNECT);
             }
         }
     }

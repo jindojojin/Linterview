@@ -20,14 +20,13 @@ var dbmodel= {
         }
     },
 
-    addViolation: async function(userID,website){ //them vi pham
+    addViolation: async function(violation){ //them vi pham
+        if(!ObjectId.isValid(violation.userID)) return Promise.reject("getBannedWebSite in mongo.js : userId is not valid !")
         let client = await mongoClient.connect(url,{useNewUrlParser : true});
         let db = client.db('linterview_svmc');
         try {
-            let query = {_id:{$oid : userID}}
-            const res = await db.collection('User').findOne({});
-            console.log(res.listWEB);
-            return Promise.resolve(res);
+            await db.collection('Violation').insertOne(violation);
+            return Promise.resolve("OK");
         } catch (error) {
             return Promise.reject(error);
         } finally {
@@ -49,7 +48,7 @@ var dbmodel= {
             let addUserToAddmin = await db.collection('Admin').updateOne(query,newValue);
 
             console.log(addUserToAddmin);
-            return Promise.resolve("OK");
+            return Promise.resolve(addNewUser.insertedId+"");
         } catch (error) {
             return Promise.reject(error);
         } finally {

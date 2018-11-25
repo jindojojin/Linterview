@@ -13,5 +13,6 @@ namespace LinterViewTrack.Template
         public List<WebSite> DARKLIST { get; set; }
         public bool FLAG_CONNECTION_LOST { get; set; }
         public bool FLAG_SIGNUP_CANCLED { get; set; }
+        public string THIS_COMPUTER_ID { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace LinterViewTrack
                     else
                     {
                         GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST = false;
-                        return "";
+                        return res.StatusCode.ToString();
                     }
                     
                 }

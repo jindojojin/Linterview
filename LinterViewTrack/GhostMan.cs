@@ -71,7 +71,8 @@ namespace LinterViewTrack
                 if (dnscache.Contains(a.url)){
                     if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE)  Console.WriteLine("vi pham: " + a.name);
                     if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("call to snitch");
-                    new Snitch(a);
+                    Snitch s = new Snitch();
+                    s.snitch(a);
                     flag = true;
                 }
             }

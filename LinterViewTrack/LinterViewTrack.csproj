@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="Template\SETTING.cs" />
     <Compile Include="Template\SignUpInfo.cs" />
+    <Compile Include="Template\Violation.cs" />
     <Compile Include="Template\WebSite.cs" />
   </ItemGroup>
   <ItemGroup>

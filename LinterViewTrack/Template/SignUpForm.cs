@@ -25,8 +25,11 @@ namespace LinterViewTrack.Template
 
         private void Regis_btn_Click(object sender, EventArgs e)
         {
-           this.adminCode_s = this.adminCode.Text;
+            this.adminCode_s = this.adminCode.Text;
             this.computerName_s = this.this_computer_name.Text;
+            if (adminCode_s == "") { this.status_label.Text = "ADMIN CODE không hợp lệ !"; return; }
+            if (computerName_s == "") { this.status_label.Text = "Tên người sử dụng không hợp lệ !"; return; }
+            this.status_label.Text = "Đang kết nối tới Server ........";
             GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST = false;
             ThreadStart ts = new ThreadStart(SignUP);
             Thread s = new Thread(ts);
@@ -54,12 +57,18 @@ namespace LinterViewTrack.Template
                     string newid = await new HTTP_CONTROLER().SendPOST(info,SETTING.Instance.SignUpUri);
                     if (newid != "")
                     {
+                        if( newid == "Unauthorized")
+                        {
+                            this.status_label.Text = "ADMIN CODE không tồn tại trên hệ thống, vui lòng kiểm tra lại!";
+                            return;
+                        }
                         this.status_label.Text = "Đăng kí thành công! Xin chờ giây lát ....";
                         //ghi thông tin id vào register
                         RegistryKey LinterviewRegistryKey = Registry.CurrentUser.CreateSubKey(SETTING.Instance.REGISTER_SETUP_NAME);
-                        LinterviewRegistryKey.SetValue("adminID", newid);
+                        LinterviewRegistryKey.SetValue("hkeynopar", newid);
                         LinterviewRegistryKey.Close();
-                        return;
+                    this.Close();
+                    return;
                     }
                     else
                     {

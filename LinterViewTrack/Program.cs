@@ -14,9 +14,12 @@ namespace LinterViewTrack
         static void Main(string[] args)
         {
             setupApplication();
+            //start check signup info , if signuped => run else signup
             checkAndWriteRegisterKey();
             if (GLOBAL_INSTANCE.Instance.FLAG_SIGNUP_CANCLED) return;
-            GhostMan gm = new GhostMan();
+            //end signup
+
+            GhostMan gm = new GhostMan();//theo doi dns
             Thread follow = new Thread(gm.run);
             GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST = true;
             follow.Start();
@@ -83,6 +86,8 @@ namespace LinterViewTrack
             {
                 if(name == SETTING.Instance.REGISTER_SETUP_NAME)
                 {
+                    RegistryKey reg = Registry.CurrentUser.OpenSubKey(SETTING.Instance.REGISTER_SETUP_NAME);
+                    GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ID= reg.GetValue("hkeynopar").ToString();
                     return;
                 }
             }
