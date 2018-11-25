@@ -11,8 +11,10 @@ namespace LinterViewTrack
 {
     class Program
     {
+        static bool isNewSession;
         static void Main(string[] args)
         {
+            isNewSession = true;
             setupApplication();
             //start check signup info , if signuped => run else signup
             checkAndWriteRegisterKey();
@@ -32,35 +34,31 @@ namespace LinterViewTrack
 
         static async Task GetAlive()
         {
-            using (var client = new HttpClient())
+            string x = await new HTTP_CONTROLER().sendGET(SETTING.Instance.AliveUri+GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ID);
+            if(x != "" && x!="Unauthorized") 
             {
-                // send "i am alive" signal and get the data setting
-                try
-                {
-                    client.BaseAddress = new Uri(SETTING.Instance.ServerUri);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    HttpResponseMessage res = await client.GetAsync(SETTING.Instance.AliveUri);
-                    if (res.IsSuccessStatusCode)
+                if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine(x);
+                if (x == "1" || isNewSession) //have updated or have not got DarkList yet (cause restart)
+                {                    
+                    try
                     {
-                        string x = await res.Content.ReadAsStringAsync();
-                        BannedSites a = JsonConvert.DeserializeObject<BannedSites>(x);
-                        //List<string> list = new List<string>();
+                        string list = await new HTTP_CONTROLER().sendGET(SETTING.Instance.GetDarkListUri + GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ID);
+                        if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine(list);
+                        BannedSites a = JsonConvert.DeserializeObject<BannedSites>(list);
                         GLOBAL_INSTANCE.Instance.DARKLIST = a.listBanned;
+                        isNewSession = false;
                     }
-                    else
+                    catch (Exception e)
                     {
-
+                        if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine(e);
                     }
-                    GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST = false;
-                }
-                catch (Exception e)
-                {
-                    if(SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("Connection lost! sleep. Reconnect after "+SETTING.Instance.TIME_TO_RECONNECT+" milisecond");
-                    GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST = true;
-                    Thread.Sleep(SETTING.Instance.TIME_TO_RECONNECT);
                 }
             }
+            else
+            {
+                if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("Ha ha lỗi rồi");
+            }
+           
         }
 
         static void setupApplication()
@@ -70,8 +68,9 @@ namespace LinterViewTrack
             SETTING.Instance.TIME_TO_RECONNECT = 10000;
             SETTING.Instance.TIME_TO_SEND_ALIVE_SIGNAL = 5000;
             SETTING.Instance.SnitchUri = "/iamsorry";
-            SETTING.Instance.AliveUri = "/iamalive";
+            SETTING.Instance.AliveUri = "/iamalive/";
             SETTING.Instance.SignUpUri = "/signupTrack";
+            SETTING.Instance.GetDarkListUri = "/listWebsiteBanned/";
             SETTING.Instance.REGISTER_SETUP_NAME = "LINTERVIEW_SS";
             SETTING.Instance.FLAG_IS_IN_DEBUG_MODE = true;
             //if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("");

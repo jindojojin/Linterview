@@ -13,15 +13,16 @@ namespace LinterViewTrack
     {
         public GhostMan()
         {
-            //Console.WriteLine("Ghost man working!");
         }
         public void run()
         {
+            if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("Ghostman working");
             while (true)
             {
                 if (GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST == true)
                 {
                     Thread.Sleep(SETTING.Instance.TIME_TO_RECONNECT);
+                    continue;
                 }
                 else
                 {

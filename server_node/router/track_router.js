@@ -30,6 +30,29 @@ var track_router = {
             res.statusCode = 401;
             res.send();
         })
+    },
+    checkAlive: function(req,res){
+        db.checkAlive(req.params.id).then( r =>{
+            res.statusCode = 200;
+            res.send(r+"");
+        }).catch(e =>{
+            console.log(e);
+            res.statusCode = 401;
+            res.send();
+        })
+    },
+    sendListWebSite: function(req,res){
+        console.log(req.params.id);
+        db.getBannedWebSites(req.params.id).then(r=>{
+            res.statusCode = 200;
+            let list={};
+            list.listBanned=r;
+            res.send(list);
+        }).catch(e =>{
+            console.log(e);
+            res.statusCode = 401;
+            res.send();
+        })
     }
 }
 module.exports = track_router;

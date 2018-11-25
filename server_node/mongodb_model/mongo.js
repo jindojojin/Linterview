@@ -2,6 +2,26 @@ var mongoClient = require('mongodb').MongoClient;
 const url='mongodb://server:w5ixa6urgKMyf2N@ds113134.mlab.com:13134/linterview_svmc';
 var ObjectId = require('mongodb').ObjectID;
 var dbmodel= {
+    checkAlive: async function(userID){
+        if(!ObjectId.isValid(userID)) return Promise.reject("getAlive in mongo.js : userId is not valid !")
+        let client = await mongoClient.connect(url,{useNewUrlParser : true});
+        let db = client.db('linterview_svmc');
+        try {
+
+
+            //trả về là có sự thay đổi ở danh sách cấm không
+            let query = { _id: { $in: [ userID, new ObjectId(userID) ] }} ;
+            const res = await db.collection('User').findOne(query);
+            console.log(res.haveUpdated);
+            if(res != null)
+            return Promise.resolve(res.haveUpdated);
+            else return Promise.reject("getBannedWebSite in mongo.js : cant find user");
+        } catch (error) {
+            return Promise.reject(error);
+        } finally {
+            client.close();
+        }
+    },
     getBannedWebSites: async function(userID){
         if(!ObjectId.isValid(userID)) return Promise.reject("getBannedWebSite in mongo.js : userId is not valid !")
         let client = await mongoClient.connect(url,{useNewUrlParser : true});
@@ -10,8 +30,11 @@ var dbmodel= {
             let query = { _id: { $in: [ userID, new ObjectId(userID) ] }} ;
             const res = await db.collection('User').findOne(query);
             console.log(res.listBannedWebSite);
-            if(res != null)
-            return Promise.resolve(res.listBannedWebSite);
+            if(res != null){
+                let newValue = {$set:{haveUpdated:0}} // đặt lại là không có cập nhập
+                await db.collection('User').updateOne(query,newValue);
+                return Promise.resolve(res.listBannedWebSite);
+            }            
             else return Promise.reject("getBannedWebSite in mongo.js : cant find user");
         } catch (error) {
             return Promise.reject(error);
@@ -21,7 +44,7 @@ var dbmodel= {
     },
 
     addViolation: async function(violation){ //them vi pham
-        if(!ObjectId.isValid(violation.userID)) return Promise.reject("getBannedWebSite in mongo.js : userId is not valid !")
+        if(!ObjectId.isValid(violation.userID)) return Promise.reject("addViolation in mongo.js : userId is not valid !")
         let client = await mongoClient.connect(url,{useNewUrlParser : true});
         let db = client.db('linterview_svmc');
         try {
@@ -35,7 +58,7 @@ var dbmodel= {
     },
 
     addUser: async function(addminID, name){
-        if(!ObjectId.isValid(addminID)) return Promise.reject("getBannedWebSite in mongo.js : addminID is not valid !")
+        if(!ObjectId.isValid(addminID)) return Promise.reject("addUser in mongo.js : addminID is not valid !")
         let client = await mongoClient.connect(url,{useNewUrlParser : true});
         let db = client.db('linterview_svmc');
         try {

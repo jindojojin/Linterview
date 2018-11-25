@@ -6,8 +6,9 @@ var jsonParser = require('body-parser').json();  // nhận json từ client
 
 module.exports = {
     route: function (app) {
-        app.get('/iamalive', (req, res) => res.send(JSON.stringify({listBanned: [{name:"nhattao", url:"nhattao.com"},{name:"facebook", url: "facebook.com"}]})));
+        app.get('/iamalive/:id', (req, res) => track_router.checkAlive(req,res));
         app.post('/iamsorry',jsparser,(req,res)=>track_router.addViolation(req,res));
         app.post('/signUpTrack',jsonParser,(req,res)=>track_router.addComputer(req,res));
+        app.get('/listWebsiteBanned/:id', (req,res)=>track_router.sendListWebSite(req,res));
     }
 }
