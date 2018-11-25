@@ -18,7 +18,9 @@ namespace LinterViewTrack.Template
         public int TIME_TO_SEND_ALIVE_SIGNAL { get; set; }
         public string ServerUri { get; set; }
         public bool FLAG_IS_IN_DEBUG_MODE { get; set; }
+        public string SignUpUri { get; set; }  
         public string SnitchUri { get; set; } // uri to send post request allow server see user's browsing banned website
         public string AliveUri { get; set; }  // uri to send get request allow server know client is fine :)
+        public string REGISTER_SETUP_NAME { get; set; } // where to get setup infomation when startup
     }
 }

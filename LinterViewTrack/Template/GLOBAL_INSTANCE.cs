@@ -12,5 +12,6 @@ namespace LinterViewTrack.Template
         private GLOBAL_INSTANCE() { }
         public List<WebSite> DARKLIST { get; set; }
         public bool FLAG_CONNECTION_LOST { get; set; }
+        public bool FLAG_SIGNUP_CANCLED { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Threading;
 using LinterViewTrack.Template;
-using System.Collections.Generic;
+using Microsoft.Win32;
 
 namespace LinterViewTrack
 {
@@ -14,6 +14,8 @@ namespace LinterViewTrack
         static void Main(string[] args)
         {
             setupApplication();
+            checkAndWriteRegisterKey();
+            if (GLOBAL_INSTANCE.Instance.FLAG_SIGNUP_CANCLED) return;
             GhostMan gm = new GhostMan();
             Thread follow = new Thread(gm.run);
             GLOBAL_INSTANCE.Instance.FLAG_CONNECTION_LOST = true;
@@ -66,8 +68,26 @@ namespace LinterViewTrack
             SETTING.Instance.TIME_TO_SEND_ALIVE_SIGNAL = 5000;
             SETTING.Instance.SnitchUri = "/iamsorry";
             SETTING.Instance.AliveUri = "/iamalive";
+            SETTING.Instance.SignUpUri = "/signupTrack";
+            SETTING.Instance.REGISTER_SETUP_NAME = "LINTERVIEW_SS";
             SETTING.Instance.FLAG_IS_IN_DEBUG_MODE = true;
             //if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("");
+            
+        }
+
+        static void checkAndWriteRegisterKey()
+        {   //get all register at currentUser         
+            string[] RegisterValue = Registry.CurrentUser.GetSubKeyNames();
+            // check for setup already in register
+            foreach(string name in RegisterValue)
+            {
+                if(name == SETTING.Instance.REGISTER_SETUP_NAME)
+                {
+                    return;
+                }
+            }
+            SignUpForm registerForm = new SignUpForm();
+            registerForm.ShowDialog();
         }
     }
 }
