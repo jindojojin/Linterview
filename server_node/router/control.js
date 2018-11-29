@@ -10,5 +10,7 @@ module.exports = {
         app.post('/iamsorry',jsparser,(req,res)=>track_router.addViolation(req,res));
         app.post('/signUpTrack',jsonParser,(req,res)=>track_router.addComputer(req,res));
         app.get('/listWebsiteBanned/:id', (req,res)=>track_router.sendListWebSite(req,res));
+        app.get('/admin/listComputers/:id',(req,res)=> admin_router.sendListComputer(req,res));
+        app.post('/admin/overviewByUser',jsonParser,(req,res)=> admin_router.sendOverViewByUser(req,res))
     }
 }

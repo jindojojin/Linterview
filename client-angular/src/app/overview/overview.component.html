@@ -1,0 +1,44 @@
+<br>
+<br>
+<button *ngIf="!showCustom" class=" ml-2 btn btn-sm btn-primary" (click)="hideCustom()">Mở tùy chỉnh</button>
+<div class="row">
+  <div *ngIf="showCustom" class="col-md-3">
+    <br>
+    <form class="container" (ngSubmit)="onSubmit()" [formGroup]="customForm">
+      <div class="form-group col">
+        <label for="inputState">Chế độ</label>
+        <select formControlName="mode" id="inputState" class="form-control">
+          <option value="computer" selected>Theo máy tính</option>
+          <option value="website" >Theo website bị cấm</option>
+        </select>
+      </div>
+      <div class="form-group col">
+        <label for="inputState">Thời gian</label>
+        <select formControlName="time" id="inputState" class="form-control">
+          <option value="custom" selected>Tùy chọn</option>
+          <option value="today">Ngày hôm nay</option>
+          <option value="lastWeek">Một tuần trước</option>
+          <option value="lastMonth">Một tháng trước</option>
+          <option value="lastYear">Một năm trước</option>
+        </select>
+      </div>
+      <div *ngIf="customForm.value.time == 'custom'" class="form-group col">
+        <label for="inputPassword4">Từ</label>
+        <input formControlName="fromDate" type="date" min="2018-10-01" class="form-control" placeholder="Password">
+      </div>
+      <div *ngIf="customForm.value.time == 'custom'" class="form-group col">
+        <label for="inputPassword4">Đến</label>
+        <input formControlName="toDate" type="date" min="2018-10-01" class="form-control" placeholder="Password">
+      </div>
+      <div class="form-group col">
+        <button *ngIf="showCustom" class="btn btn-sm float-left btn-danger mt-3" (click)="hideCustom()">Ẩn tùy chỉnh</button>
+        <button type="submit" class="float-right btn-sm btn btn-primary mt-3">Tạo thống kê</button>
+      </div>
+    </form>
+  </div>
+  <div [ngClass]="classForChart">
+    <div class="mx-5">
+      <canvas id="chart">{{chart}}</canvas>
+    </div>
+  </div>
+</div>
