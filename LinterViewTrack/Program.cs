@@ -42,7 +42,7 @@ namespace LinterViewTrack
                 {                    
                     try
                     {
-                        string list = await new HTTP_CONTROLER().sendGET(SETTING.Instance.GetDarkListUri + GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ID);
+                        string list = await new HTTP_CONTROLER().sendGET(SETTING.Instance.GetDarkListUri + GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ADMIN+"/"+GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ID);
                         if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine(list);
                         BannedSites a = JsonConvert.DeserializeObject<BannedSites>(list);
                         GLOBAL_INSTANCE.Instance.DARKLIST = a.listBanned;
@@ -87,6 +87,7 @@ namespace LinterViewTrack
                 {
                     RegistryKey reg = Registry.CurrentUser.OpenSubKey(SETTING.Instance.REGISTER_SETUP_NAME);
                     GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ID= reg.GetValue("hkeynopar").ToString();
+                    GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ADMIN = reg.GetValue("adhkeynopar").ToString();
                     return;
                 }
             }

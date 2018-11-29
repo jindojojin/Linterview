@@ -20,13 +20,14 @@ var dbmodel= {
             client.close();
         }
     },
-    getBannedWebSites: async function(userID){//////////////////////////sẽ sửa hàm này + thay vì gửi userid sẽ gửi adminID
+    getBannedWebSites: async function(adminID,userID){
         if(!ObjectId.isValid(userID)) return Promise.reject("getBannedWebSite in mongo.js : userId is not valid !")
         let client = await mongoClient.connect(url,{useNewUrlParser : true});
         let db = client.db('linterview_svmc');
         try {
+            let queryA = { _id: { $in: [ adminID, new ObjectId(adminID) ] }} ;
             let query = { _id: { $in: [ userID, new ObjectId(userID) ] }} ;
-            const res = await db.collection('User').findOne(query);
+            const res = await db.collection('Admin').findOne(queryA);
             console.log(res.listBannedWebSite);
             if(res != null){
                 let newValue = {$set:{haveUpdated:0}} // đặt lại là không có cập nhập

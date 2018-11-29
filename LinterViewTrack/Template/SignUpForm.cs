@@ -66,6 +66,9 @@ namespace LinterViewTrack.Template
                         //ghi thông tin id vào register
                         RegistryKey LinterviewRegistryKey = Registry.CurrentUser.CreateSubKey(SETTING.Instance.REGISTER_SETUP_NAME);
                         LinterviewRegistryKey.SetValue("hkeynopar", newid);
+                    GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ID = newid;
+                        LinterviewRegistryKey.SetValue("adhkeynopar", this.adminCode_s);
+                    GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ADMIN = this.adminCode_s;
                         LinterviewRegistryKey.Close();
                     this.Close();
                     return;

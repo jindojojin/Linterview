@@ -37,7 +37,7 @@ var track_router = {
     },
     sendListWebSite: function(req,res){
         // console.log(req.params.id);
-        db.getBannedWebSites(req.params.id).then(r=>{
+        db.getBannedWebSites(req.params.idA,req.params.idU).then(r=>{
             res.statusCode = 200;
             let list={};
             list.listBanned=r;

@@ -14,5 +14,6 @@ namespace LinterViewTrack.Template
         public bool FLAG_CONNECTION_LOST { get; set; }
         public bool FLAG_SIGNUP_CANCLED { get; set; }
         public string THIS_COMPUTER_ID { get; set; }
+        public string THIS_COMPUTER_ADMIN { get; set; }
     }
 }
