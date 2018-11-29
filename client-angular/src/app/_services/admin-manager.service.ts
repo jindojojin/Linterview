@@ -9,8 +9,7 @@ export class AdminManagerService {
 
   constructor(private http :Http) { }
   getComputers() {
-    let userID = getCookie("userID")
-    var url = myWebsiteDomain + '/admin/listComputers/5bf3ec04e7179a56e21350f3';
+    var url = myWebsiteDomain + '/admin/listComputers';
     return this.http.get(url,{withCredentials:true})
       .toPromise()
       .then(res => {
@@ -19,13 +18,21 @@ export class AdminManagerService {
   }
 
   getOverView(data){
-    setCookie("userID","5bf3ec04e7179a56e21350f3",1);
-    let userID = getCookie("userID");
+    if(data.mode == 'computer'){
     var url = myWebsiteDomain + '/admin/overviewByUser';
     return this.http.post(url,data,{withCredentials:true})
     .toPromise()
       .then(res => {
         return res.json()
       }).catch(e => false);
+    }
+    if(data.mode == 'website'){
+      var url = myWebsiteDomain + '/admin/overviewByWebsite';
+    return this.http.post(url,data,{withCredentials:true})
+    .toPromise()
+      .then(res => {
+        return res.json()
+      }).catch(e => false);
+    }
   }
 }

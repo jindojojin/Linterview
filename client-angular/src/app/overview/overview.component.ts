@@ -15,19 +15,18 @@ export class OverviewComponent implements OnInit {
   showCustom=true;
   labels=[];
   datas=[];
-
   customForm : FormGroup;
   constructor(private admin_mngr : AdminManagerService) {
     this.customForm = new FormGroup({
       mode: new FormControl("computer"),
-      time: new FormControl("custom"),
+      time: new FormControl("today"),
       fromDate: new FormControl(new Date().toISOString().substr(0,10)),
       toDate: new FormControl(new Date(new Date().getTime()+(1000*24*60*60)).toISOString().substr(0,10))
     })
   }
 
   ngOnInit() {
-    this.generateChart();
+    this.onSubmit();
     console.log(new Date().toISOString().substr(0,10));
   }
 
@@ -35,14 +34,14 @@ export class OverviewComponent implements OnInit {
     if(this.customForm.value.time == 'lastWeek') this.customForm.value.fromDate = new Date(new Date().getTime()-(1000*24*60*60*7)).toISOString().substr(0,10);
     if(this.customForm.value.time == 'lastMonth') this.customForm.value.fromDate = new Date(new Date().getTime()-(1000*24*60*60*30)).toISOString().substr(0,10);
     if(this.customForm.value.time == 'lastYear') this.customForm.value.fromDate = new Date(new Date().getTime()-(1000*24*60*60*365)).toISOString().substr(0,10);
-    
     console.log(this.customForm.value);
     this.admin_mngr.getOverView(this.customForm.value).then(r=>{
       console.log(r);
       this.datas =[];
       this.labels = [];
       r.forEach(element => {
-        this.labels.push(element.name);
+        if(this.customForm.value.mode == "website") this.labels.push(element.name+"( "+element.url+")");
+        else this.labels.push(element.name);
         this.datas.push(element.sum);
       });
       this.generateChart();
@@ -53,10 +52,10 @@ export class OverviewComponent implements OnInit {
     console.log("đã vào hàm")
     if(this.showCustom){
       this.classForChart="col"
-    }else this.classForChart="col-9"
+    }else this.classForChart="col-9";
     this.showCustom = !this.showCustom;
+    this.generateChart();
   }
-
   generateChart(){
     this.chart = new Chart('chart', {
       type: 'bar',
