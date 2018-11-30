@@ -21,7 +21,8 @@ var dbmodel= {
         }
     },
     getBannedWebSites: async function(adminID,userID){
-        if(!ObjectId.isValid(userID)) return Promise.reject("getBannedWebSite in mongo.js : userId is not valid !")
+        if(!ObjectId.isValid(adminID)) return Promise.reject("getBannedWebSite in mongo.js : userId is not valid !")
+        if(userID != null && !ObjectId.isValid(userID)) return Promise.reject("getBannedWebSite in mongo.js : userId is not valid !")
         let client = await mongoClient.connect(url,{useNewUrlParser : true});
         let db = client.db('linterview_svmc');
         try {
@@ -30,8 +31,10 @@ var dbmodel= {
             const res = await db.collection('Admin').findOne(queryA);
             console.log(res.listBannedWebSite);
             if(res != null){
+                if(userID != null){  // thực hiện nếu yêu cầu là của máy tính, không thực hiện nếu là yêu cầu của website
                 let newValue = {$set:{haveUpdated:0}} // đặt lại là không có cập nhập
                 await db.collection('User').updateOne(query,newValue);
+                }
                 return Promise.resolve(res.listBannedWebSite);
             }            
             else return Promise.reject("getBannedWebSite in mongo.js : cant find user");
@@ -65,7 +68,7 @@ var dbmodel= {
             let query = { _id: { $in: [ adminID, new ObjectId(adminID) ] }} ;
             let findAdmin = await db.collection('Admin').findOne(query);
             if(findAdmin!= null){
-                let new_user = {"name":name,"adminID":adminID,"listBannedWebSite" : [],"haveUpdated" : 0};
+                let new_user = {"name":name,"adminID":adminID,"haveUpdated" : 1};
                 const addNewUser = await db.collection('User').insertOne(new_user);
                 return Promise.resolve(addNewUser.insertedId+"");
             }else return Promise.reject("adminNotFound");
@@ -159,7 +162,30 @@ var dbmodel= {
         } finally {
             client.close();
         }
+    },
+    updateListBannedWebsite: async function(adminID,listWeb){
+        if(!ObjectId.isValid(adminID)) return Promise.reject("addUser in mongo.js : adminID is not valid !");
+        let client = await mongoClient.connect(url,{useNewUrlParser : true});
+        let db = client.db('linterview_svmc');
+        try {
+            
+            let query = { _id: { $in: [ adminID, new ObjectId(adminID) ] }} ;
+            let findAdmin = await db.collection('Admin').findOne(query);
+            if(findAdmin!= null){
+                let newValue = {$set:{listBannedWebSite:listWeb}} ;
+                await db.collection('Admin').updateOne(query,newValue);
+                newValue = {$set:{haveUpdated:1}}
+                query={adminID:adminID}
+                await db.collection('User').updateMany(query,newValue);
 
+                return Promise.resolve("OK");
+            }else return Promise.reject("adminNotFound");
+            
+        } catch (error) {
+            return Promise.reject(error);
+        } finally {
+            client.close();
+        }
     }
 }
 function objectIdWithTimestamp(timestamp) {

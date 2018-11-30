@@ -7,6 +7,7 @@ import { ListComputerComponent } from './list-computer/list-computer.component';
 import { ComputerDetailComponent } from './computer-detail/computer-detail.component';
 import { SettingComponent } from './setting/setting.component';
 import { OverviewComponent } from './overview/overview.component';
+import { BannedWebsiteComponent } from './banned-website/banned-website.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'listComputers', component:ListComputerComponent},
   { path: 'computerDetail', component:ComputerDetailComponent},
   { path: 'setting', component:SettingComponent},
-  { path: 'overview', component : OverviewComponent}
+  { path: 'Thong-ke', component : OverviewComponent},
+  { path: 'Cac-website-cam', component : BannedWebsiteComponent}
 
 ];
 

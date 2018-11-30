@@ -72,6 +72,8 @@ namespace LinterViewTrack
             SETTING.Instance.SignUpUri = "/signupTrack";
             SETTING.Instance.GetDarkListUri = "/listWebsiteBanned/";
             SETTING.Instance.REGISTER_SETUP_NAME = "LINTERVIEW_SS";
+            SETTING.Instance.REGISTER_USER_ADMIN_KEY = "adhkeynopar";
+            SETTING.Instance.REGISTER_USER_ID_KEY = "hkeynopar";
             SETTING.Instance.FLAG_IS_IN_DEBUG_MODE = true;
             //if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("");
             
@@ -86,8 +88,8 @@ namespace LinterViewTrack
                 if(name == SETTING.Instance.REGISTER_SETUP_NAME)
                 {
                     RegistryKey reg = Registry.CurrentUser.OpenSubKey(SETTING.Instance.REGISTER_SETUP_NAME);
-                    GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ID= reg.GetValue("hkeynopar").ToString();
-                    GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ADMIN = reg.GetValue("adhkeynopar").ToString();
+                    GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ID= reg.GetValue(SETTING.Instance.REGISTER_USER_ID_KEY).ToString();
+                    GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ADMIN = reg.GetValue(SETTING.Instance.REGISTER_USER_ADMIN_KEY).ToString();
                     return;
                 }
             }

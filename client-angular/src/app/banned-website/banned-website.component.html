@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Tên</th>
+      <th>Địa chỉ url</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let web of listWebs; let i=index">
+        <td>{{web.name}}</td>
+        <td>{{web.url}}</td>
+        <td style="text-align:right"><button class="btn" (click)="deleteRow(i)"><i class="fa fa-trash"></i></button></td>
+      </tr>
+      <tr>
+          <td><input id="name_ip" class="form-control" type="text"></td>
+          <td><input id="url_ip" class="form-control" type="text" placeholder="Sử dụng <website>.com thay cho www.<website>.com"></td>
+          <td style="text-align:right"><button class="btn" (click)="addRow(i)"><i class="fa fa-plus"></i></button></td>
+        </tr>
+  </tbody>
+</table>
+<button class=" btn btn-secondary float-right" (click)="submitNewList()">Lưu lại</button>
+</div>

@@ -13,5 +13,7 @@ module.exports = {
         app.get('/admin/listComputers',(req,res)=> admin_router.sendListComputer(req,res));
         app.post('/admin/overviewByUser',jsonParser,(req,res)=> admin_router.sendOverViewByUser(req,res));
         app.post('/admin/overviewByWebsite',jsonParser,(req,res)=> admin_router.sendOverViewByWebsite(req,res));
+        app.get('/admin/listWebSite',(req,res)=> admin_router.sendListWebsite(req,res));
+        app.put('/admin/listWebSite',jsonParser,(req,res)=> admin_router.addListWebsite(req,res));
     }
 }

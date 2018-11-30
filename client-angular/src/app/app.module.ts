@@ -16,6 +16,7 @@ import { OverviewComponent } from './overview/overview.component';
 import { NgbModule, NgbDropdownModule, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDropdownToggle } from '@ng-bootstrap/ng-bootstrap/dropdown/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BannedWebsiteComponent } from './banned-website/banned-website.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ComputerCardComponent,
     LimitTextPipe,
     SettingComponent,
-    OverviewComponent
+    OverviewComponent,
+    BannedWebsiteComponent
   ],
   imports: [
     BrowserModule,

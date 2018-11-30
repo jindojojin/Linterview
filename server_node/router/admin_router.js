@@ -44,5 +44,32 @@ var admin_router = {
 
 
     },
+    sendListWebsite: function (req, res) {
+        // console.log(req.body);
+        db.getBannedWebSites(req.cookies.userID,null).then(r => {
+            console.log("Đã xử lý yêu cầu xem website");
+            res.statusCode = 200;
+            console.log(r);
+            res.send(JSON.stringify(r));
+        }).catch(e => {
+            res.statusCode = 401;
+            res.send();
+        })
+
+
+    },
+    addListWebsite: function (req, res) {
+        console.log(req.body);
+        db.updateListBannedWebsite(req.cookies.userID,req.body.list).then(r => {
+            console.log("Đã xử lý yêu cầu update website");
+            res.statusCode = 201;
+            console.log(r);
+            res.send(JSON.stringify(r));
+        }).catch(e => {
+            res.statusCode = 401;
+            res.send();
+        })
+    },
+
 }
 module.exports = admin_router;

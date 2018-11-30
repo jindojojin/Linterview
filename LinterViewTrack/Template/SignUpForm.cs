@@ -65,9 +65,9 @@ namespace LinterViewTrack.Template
                         this.status_label.Text = "Đăng kí thành công! Xin chờ giây lát ....";
                         //ghi thông tin id vào register
                         RegistryKey LinterviewRegistryKey = Registry.CurrentUser.CreateSubKey(SETTING.Instance.REGISTER_SETUP_NAME);
-                        LinterviewRegistryKey.SetValue("hkeynopar", newid);
+                        LinterviewRegistryKey.SetValue(SETTING.Instance.REGISTER_USER_ID_KEY, newid);
                     GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ID = newid;
-                        LinterviewRegistryKey.SetValue("adhkeynopar", this.adminCode_s);
+                        LinterviewRegistryKey.SetValue(SETTING.Instance.REGISTER_USER_ADMIN_KEY, this.adminCode_s);
                     GLOBAL_INSTANCE.Instance.THIS_COMPUTER_ADMIN = this.adminCode_s;
                         LinterviewRegistryKey.Close();
                     this.Close();
