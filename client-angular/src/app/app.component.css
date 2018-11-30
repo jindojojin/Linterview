@@ -6,7 +6,7 @@ a.nav-link:hover{
     color: rgb(0, 160, 27);
     cursor: pointer;
 }
-a.nav-link:active{
+a.nav-link:checked{
     color: rgb(0, 160, 27);
     cursor: pointer;
 }

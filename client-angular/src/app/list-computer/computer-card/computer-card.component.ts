@@ -6,10 +6,10 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./computer-card.component.css']
 })
 export class ComputerCardComponent implements OnInit {
-  @Input() computer : string;
+  @Input() computer: string;
   constructor() {
     console.log(this.computer)
-   }
+  }
 
   ngOnInit() {
   }

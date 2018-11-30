@@ -17,6 +17,9 @@ import { NgbModule, NgbDropdownModule, NgbDropdown } from '@ng-bootstrap/ng-boot
 import { NgbDropdownToggle } from '@ng-bootstrap/ng-bootstrap/dropdown/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BannedWebsiteComponent } from './banned-website/banned-website.component';
+import { TimeVietNamPipe } from './pipe/time-viet-nam.pipe';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { TotalOnlineTimePipe } from './pipe/total-online-time.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { BannedWebsiteComponent } from './banned-website/banned-website.componen
     LimitTextPipe,
     SettingComponent,
     OverviewComponent,
-    BannedWebsiteComponent
+    BannedWebsiteComponent,
+    TimeVietNamPipe,
+    DashboardComponent,
+    TotalOnlineTimePipe
   ],
   imports: [
     BrowserModule,

@@ -7,9 +7,15 @@ var dbmodel= {
         let client = await mongoClient.connect(url,{useNewUrlParser : true});
         let db = client.db('linterview_svmc');
         try {
+            
+
+
+
             //trả về là có sự thay đổi ở danh sách cấm không
             let query = { _id: { $in: [ userID, new ObjectId(userID) ] }} ;
             const res = await db.collection('User').findOne(query);
+            let update = {$set:{lastTime:new Date()},$inc:{totalCheckIn:1}};
+            await db.collection('User').updateOne(query,update);
             // console.log(res.haveUpdated);
             if(res != null)
             return Promise.resolve(res.haveUpdated);
@@ -50,6 +56,9 @@ var dbmodel= {
         let client = await mongoClient.connect(url,{useNewUrlParser : true});
         let db = client.db('linterview_svmc');
         try {
+            let query = { _id: { $in: [ violation.userID, new ObjectId(violation.userID) ] }} ;
+            let update = {$inc:{sumViolation:1}}
+            await db.collection('User').updateOne(query,update); ///// dang thử nghiệm
             await db.collection('Violation').insertOne(violation);
             return Promise.resolve("OK");
         } catch (error) {
@@ -68,7 +77,7 @@ var dbmodel= {
             let query = { _id: { $in: [ adminID, new ObjectId(adminID) ] }} ;
             let findAdmin = await db.collection('Admin').findOne(query);
             if(findAdmin!= null){
-                let new_user = {"name":name,"adminID":adminID,"haveUpdated" : 1};
+                let new_user = {"name":name,"adminID":adminID,"haveUpdated" : 1,"sumViolation":0,"totalCheckIn":0,"lastTime":""};
                 const addNewUser = await db.collection('User').insertOne(new_user);
                 return Promise.resolve(addNewUser.insertedId+"");
             }else return Promise.reject("adminNotFound");
@@ -81,7 +90,7 @@ var dbmodel= {
     },
 
     getListComputers: async function(adminID){
-        if(!ObjectId.isValid(adminID)) return Promise.reject("addUser in mongo.js : adminID is not valid !");
+        if(!ObjectId.isValid(adminID)) return Promise.reject("getListComputers in mongo.js : adminID is not valid !");
         let client = await mongoClient.connect(url,{useNewUrlParser : true});
         let db = client.db('linterview_svmc');
         try {
@@ -98,7 +107,7 @@ var dbmodel= {
     },
 
     getOverViewByUser:async function(adminID,fromDate,toDate){
-        if(!ObjectId.isValid(adminID)) return Promise.reject("addUser in mongo.js : adminID is not valid !");
+        if(!ObjectId.isValid(adminID)) return Promise.reject("getOverViewByUser in mongo.js : adminID is not valid !");
         let client = await mongoClient.connect(url,{useNewUrlParser : true});
         let db = client.db('linterview_svmc');
         try {
@@ -127,7 +136,7 @@ var dbmodel= {
 
     },
     getOverViewByWebsite:async function(adminID,fromDate,toDate){
-        if(!ObjectId.isValid(adminID)) return Promise.reject("addUser in mongo.js : adminID is not valid !");
+        if(!ObjectId.isValid(adminID)) return Promise.reject("getOverViewByWebsite in mongo.js : adminID is not valid !");
         let client = await mongoClient.connect(url,{useNewUrlParser : true});
         let db = client.db('linterview_svmc');
         try {
@@ -164,7 +173,7 @@ var dbmodel= {
         }
     },
     updateListBannedWebsite: async function(adminID,listWeb){
-        if(!ObjectId.isValid(adminID)) return Promise.reject("addUser in mongo.js : adminID is not valid !");
+        if(!ObjectId.isValid(adminID)) return Promise.reject("updateListBannedWebsite in mongo.js : adminID is not valid !");
         let client = await mongoClient.connect(url,{useNewUrlParser : true});
         let db = client.db('linterview_svmc');
         try {
@@ -186,6 +195,38 @@ var dbmodel= {
         } finally {
             client.close();
         }
+    },
+    getComputerInfo: async function(userID,firstID,number){
+        console.log("uid:"+userID);
+        console.log("fid:"+firstID);
+        console.log("num:"+number);
+
+        
+        if(!ObjectId.isValid(userID)) return Promise.reject("getComputerInfo in mongo.js : userId is not valid !")
+        let client = await mongoClient.connect(url,{useNewUrlParser : true});
+        let db = client.db('linterview_svmc');
+        try {
+            
+            let query = { _id: { $in: [ userID, new ObjectId(userID) ] }} ;
+            let user = await db.collection('User').findOne(query);
+            user.time = new ObjectId(userID).getTimestamp();
+            console.log(user);
+            if(user!= null){
+                let query2;
+                if(!ObjectId.isValid(firstID)) query2 ={userID:userID+""};
+                else query2 ={userID:userID+"",_id:{$lt:new ObjectId(firstID)}};
+                let vios = await db.collection('Violation').find(query2).sort({_id:-1}).limit(parseInt(number)).toArray();
+                vios.forEach(element => {
+                    element.time = new ObjectId(element._id).getTimestamp();
+                });
+                return Promise.resolve({info:user,violation:vios});
+            }else return Promise.reject("UserNotFound");
+            
+        } catch (error) {
+            return Promise.reject(error);
+        } finally {
+            client.close();
+        }
     }
 }
 function objectIdWithTimestamp(timestamp) {
@@ -193,18 +234,16 @@ function objectIdWithTimestamp(timestamp) {
     if (typeof(timestamp) == 'string') {
         timestamp = new Date(timestamp);
     }
-
     // Convert date object to hex seconds since Unix epoch
     var hexSeconds = Math.floor(timestamp/1000).toString(16);
-
     // Create an ObjectId with that hex timestamp
     var constructedObjectId = ObjectId(hexSeconds + "0000000000000000");
-
     return constructedObjectId
 }
 // dbmodel.getBannedWebSites('5bf4abcae7179a56e213cd2d');
 // dbmodel.addUser("5bf3ec04e7179a56e21350f3","May02");
 // dbmodel.getListComputers("5bf3ec04e7179a56e21350f3");
 // dbmodel.getOverViewByWebsite("5bf3ec04e7179a56e21350f3","2018-11-20","2018-11-30").then(r=>console.log(r));
-
+// dbmodel.getComputerInfo('5bfcd3eb5deae5036cdc284e','5bffca37ceb1cb4724d284ff',20);
+                         
 module.exports =dbmodel;

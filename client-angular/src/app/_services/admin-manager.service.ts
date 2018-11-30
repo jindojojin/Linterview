@@ -7,7 +7,9 @@ import { myWebsiteDomain } from './config';
 })
 export class AdminManagerService {
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) { 
+    setCookie("userID","5bf3ec04e7179a56e21350f3",1);
+  }
   getComputers() {
     var url = myWebsiteDomain + '/admin/listComputers';
     return this.http.get(url, { withCredentials: true })
@@ -48,6 +50,15 @@ export class AdminManagerService {
   updateListWeb(listweb){
     var url = myWebsiteDomain + '/admin/listWebsite';
       return this.http.put(url,listweb,{ withCredentials: true })
+        .toPromise()
+        .then(res => {
+          return res.json()
+        }).catch(e => false);
+  }
+
+  getComputerInfo(computerID,firstID){
+    var url = myWebsiteDomain + '/admin/computerInfo/'+computerID+"/"+firstID+"/20";
+      return this.http.get(url,{ withCredentials: true })
         .toPromise()
         .then(res => {
           return res.json()

@@ -23,5 +23,7 @@ namespace LinterViewTrack.Template
         public string SnitchUri { get; set; } // uri to send post request allow server see user's browsing banned website
         public string AliveUri { get; set; }  // uri to send get request allow server know client is fine :)
         public string REGISTER_SETUP_NAME { get; set; } // where to get setup infomation when startup
+        public string REGISTER_USER_ID_KEY { get; set; }
+        public string REGISTER_USER_ADMIN_KEY { get; set; }
     }
 }

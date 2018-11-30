@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Threading;
-// this class use to send the website name which browsed by user and be in the banned List
+// this class will send the website name which browsed by user and be in the banned List
 namespace LinterViewTrack
 {
     class Snitch

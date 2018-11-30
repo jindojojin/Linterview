@@ -18,7 +18,9 @@ const routes: Routes = [
   { path: 'computerDetail', component:ComputerDetailComponent},
   { path: 'setting', component:SettingComponent},
   { path: 'Thong-ke', component : OverviewComponent},
-  { path: 'Cac-website-cam', component : BannedWebsiteComponent}
+  { path: 'Cac-website-cam', component : BannedWebsiteComponent},
+  { path: 'Thong-tin-nhan-vien/:id', component : ComputerDetailComponent},
+  
 
 ];
 

@@ -71,5 +71,18 @@ var admin_router = {
         })
     },
 
+    sendUserInfo:function(req,res){
+        console.log(req.body);
+        db.getComputerInfo(req.params.id,req.params.firstID, req.params.number).then(r => {
+            console.log("Đã xử lý yêu cầu xem info computer");
+            res.statusCode = 200;
+            console.log(r);
+            res.send(JSON.stringify(r));
+        }).catch(e => {
+            res.statusCode = 401;
+            res.send();
+        })
+    }
+
 }
 module.exports = admin_router;

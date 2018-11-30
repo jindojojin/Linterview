@@ -15,5 +15,7 @@ module.exports = {
         app.post('/admin/overviewByWebsite',jsonParser,(req,res)=> admin_router.sendOverViewByWebsite(req,res));
         app.get('/admin/listWebSite',(req,res)=> admin_router.sendListWebsite(req,res));
         app.put('/admin/listWebSite',jsonParser,(req,res)=> admin_router.addListWebsite(req,res));
+        app.get('/admin/computerInfo/:id/:firstID/:number',(req,res)=> admin_router.sendUserInfo(req,res));
+
     }
 }
