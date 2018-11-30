@@ -57,6 +57,8 @@ export class OverviewComponent implements OnInit {
     this.generateChart();
   }
   generateChart(){
+    let div = document.getElementById('chartArea') as HTMLDivElement;
+    div.innerHTML='<canvas id="chart">{{chart}}</canvas>';
     this.chart = new Chart('chart', {
       type: 'bar',
       data: {
@@ -65,7 +67,7 @@ export class OverviewComponent implements OnInit {
           label: '# Số lần vi phạm',
           data: this.datas,
           fill: false,
-          backgroundColor: "red",
+          backgroundColor: "#00A01B",
           borderWidth: 1
         }]
       },
