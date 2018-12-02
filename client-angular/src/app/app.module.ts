@@ -13,13 +13,37 @@ import { AdminManagerService } from './_services/admin-manager.service';
 import { LimitTextPipe } from './pipe/limit.pipe';
 import { SettingComponent } from './setting/setting.component';
 import { OverviewComponent } from './overview/overview.component';
-import { NgbModule, NgbDropdownModule, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDropdownToggle } from '@ng-bootstrap/ng-bootstrap/dropdown/dropdown';
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BannedWebsiteComponent } from './banned-website/banned-website.component';
 import { TimeVietNamPipe } from './pipe/time-viet-nam.pipe';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { TotalOnlineTimePipe } from './pipe/total-online-time.pipe';
+import { ClipboardModule } from 'ngx-clipboard';
+import { IsLoginPipe } from './pipe/is-login.pipe';
+import { UserService } from './_services/user.service';
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider,LoginOpt} from "angularx-social-login";
+
+const googleLoginOptions: LoginOpt = {
+  scope: 'profile email'
+}; 
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider("934005979402-999m42b5gf5vek9og551g9hqpvbartu8.apps.googleusercontent.com",googleLoginOptions)
+   }
+  //  ,
+  // {
+  //   id: FacebookLoginProvider.PROVIDER_ID,
+  //   provider: new FacebookLoginProvider("Facebook-App-Id")
+  // },
+]);
+
+export function provideConfig() {
+  return config;
+}
+
+
 
 @NgModule({
   declarations: [
@@ -35,17 +59,22 @@ import { TotalOnlineTimePipe } from './pipe/total-online-time.pipe';
     OverviewComponent,
     BannedWebsiteComponent,
     TimeVietNamPipe,
-    DashboardComponent,
-    TotalOnlineTimePipe
+    TotalOnlineTimePipe,
+    IsLoginPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpModule,
     NgbModule,
-    FormsModule,ReactiveFormsModule
+    FormsModule,ReactiveFormsModule,
+    ClipboardModule,
+    SocialLoginModule
   ],
-  providers: [AdminManagerService],
+  providers: [AdminManagerService,UserService,{
+    provide: AuthServiceConfig,
+    useFactory: provideConfig
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

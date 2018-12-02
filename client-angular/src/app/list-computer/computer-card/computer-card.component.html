@@ -3,11 +3,11 @@
     alt="Card image cap">
   <div class="card-body">
     <h6 class="card-title" style="text-align:center">{{computer.name | limitText:20}}</h6>
+    <hr>
+    <h6>Lần truy cập cuối: <span class="badge badge-pill badge-success">{{computer.lastTime | timeVietNam}}</span></h6>
+    <h6>Tổng số vi phạm: <span class="badge badge-pill badge-success">{{computer.sumViolation}}</span></h6>
+    <hr>
+    <div style="text-align:center"><a routerLink="/Thong-tin-nhan-vien/{{computer._id}}" style="color:rgb(0, 160, 27)"
+        class="card-link">Xem chi tiết</a></div>
   </div>
-  <ul class="list-group">
-    <li class="list-group-item">Lần truy cập cuối: <span class="badge badge-pill badge-primary">{{computer.lastTime | timeVietNam}}</span></li>
-    <li class="list-group-item">Tổng số vi phạm: <span class="badge badge-pill badge-primary">{{computer.sumViolation}}</span></li>
-    <li class="list-group-item" style="text-align:center"><a routerLink="/Thong-tin-nhan-vien/{{computer._id}}" style="color:rgb(0, 160, 27)"
-        class="card-link">Xem chi tiết</a></li>
-  </ul>
 </div>

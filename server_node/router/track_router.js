@@ -1,4 +1,3 @@
-var admin_model = require('../Model/adminModel')
 var db = require('../mongodb_model/mongo')
 var track_router = {
    

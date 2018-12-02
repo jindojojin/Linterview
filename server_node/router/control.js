@@ -16,6 +16,8 @@ module.exports = {
         app.get('/admin/listWebSite',(req,res)=> admin_router.sendListWebsite(req,res));
         app.put('/admin/listWebSite',jsonParser,(req,res)=> admin_router.addListWebsite(req,res));
         app.get('/admin/computerInfo/:id/:firstID/:number',(req,res)=> admin_router.sendUserInfo(req,res));
-
+        app.post('/admin/login',jsonParser,(req,res)=>admin_router.login(req,res));
+        app.post('/admin/register',jsonParser,(req,res)=>admin_router.register(req,res));
+        app.post('/admin/loginGoogle',jsonParser,(req,res)=>admin_router.loginG(req,res));
     }
 }

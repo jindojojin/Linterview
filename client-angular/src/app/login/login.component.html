@@ -3,19 +3,34 @@
 <br>
 <h2 style="text-align: center">Login</h2>
 <br>
-<form class="container" style="width:50%">
+<form (ngSubmit)="login()" [formGroup]="formLogin" class="container" style="width:50%">
   <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <label>Tên đăng nhập</label>
+    <input formControlName="username" type="email" class="form-control" placeholder="Enter email">
+    <small class="form-text text-muted">We'll never share your email with anyone else.</small>
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    <label>Mật khẩu</label>
+    <input formControlName="password" type="password" class="form-control" placeholder="Password">
   </div>
   <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    <input type="checkbox" class="form-check-input">
+    <label class="form-check-label">Ghi nhớ đăng nhập</label>
   </div>
-  <button type="submit" class="btn btn-primary">Login</button>
+  <button type="submit" class="btn btn-success float-right">Đăng nhập</button>
 </form>
+<br>
+<br>
+<br>
+<p style="text-align:center;color:rgb(0, 160, 27)">Hoặc</p>
+<div class="row">
+  <div class="col"></div>
+  <div class="col">
+    <button class="btn" style="width:100%" (click)="signInWithGoogle()">
+      <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+      Đăng nhập bằng tài khoản Google
+    </button>
+  </div>
+  <div class="col"></div>
+</div>
+

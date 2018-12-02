@@ -10,10 +10,10 @@ import { OverviewComponent } from './overview/overview.component';
 import { BannedWebsiteComponent } from './banned-website/banned-website.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'Dashboard', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component:HomeComponent},
+  { path: 'Dashboard', component:HomeComponent},
   { path: 'listComputers', component:ListComputerComponent},
   { path: 'computerDetail', component:ComputerDetailComponent},
   { path: 'setting', component:SettingComponent},
