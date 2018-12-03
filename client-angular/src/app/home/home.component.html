@@ -1,14 +1,19 @@
 <br>
-
-<h2 *ngIf="(user|isLogin)" class="mx-5"> ADMIN_CODE của bạn:
-    <button class="btn btn-lg btn-outline-success" data-toggle="tooltip" data-placement="top" title="Sao chép ADMIN_CODE vào Clipboard"
-        ngxClipboard [cbContent]="admincode">{{admincode}}
-        <i class="fa fa-copy"></i>
-    </button>
-</h2>
+<div *ngIf="(user|isLogin)">
+    <h2 class="mx-5"> ADMIN_CODE của bạn:
+        <button class="btn btn-lg btn-outline-success" data-toggle="tooltip" data-placement="top" title="Sao chép ADMIN_CODE vào Clipboard"
+            ngxClipboard [cbContent]="admincode">{{admincode}}
+            <i class="fa fa-copy"></i>
+        </button>
+    </h2>
+    <!-- <h2 class="mx-5"> Số nhân viên đang quản lý:
+    </h2>
+    <h2 class="mx-5"> Số vi phạm được báo cáo:
+    </h2> -->
+</div>
 <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
     <div class="col-md-5 p-lg-5 mx-auto">
-        <h1 class="display-4 font-weight-normal text-success">LinterviewTrack</h1>
+        <h1 style="text-align:center" class="font-weight-normal text-success">LinterviewTrack</h1>
         <p class="lead font-weight-normal">Tải về phần mềm giám sát và cài đặt trên máy tính chạy HĐH Windows của các
             nhân viên bạn quản lý.</p>
         <a class="btn btn-outline-success" href="#">Tải file cài đặt .exe</a>
@@ -16,13 +21,13 @@
     <div class="product-device shadow-sm d-none d-md-block"></div>
     <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
 </div>
-<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+<!-- <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
     <div class="col-md-7 p-lg-5 mx-auto">
-        <h1 style="text-align:center" class="display-4 font-weight-normal text-success">LinterviewExtension</h1>
+        <h1 style="text-align:center" class="font-weight-normal text-success">LinterviewExtension</h1>
         <p class="lead font-weight-normal">Tải về Extension hoạt động trên Chrome/Cốc Cốc để nhận thông báo vi phạm của
             các nhân viên bạn quản lý.</p>
         <a class="btn btn-outline-success" href="#">Tải file tiện ích .crx</a>
     </div>
     <div class="product-device shadow-sm d-none d-md-block"></div>
     <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
-</div>
+</div> -->

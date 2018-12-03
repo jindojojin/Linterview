@@ -5,21 +5,20 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ListComputerComponent } from './list-computer/list-computer.component';
 import { ComputerDetailComponent } from './computer-detail/computer-detail.component';
-import { SettingComponent } from './setting/setting.component';
 import { OverviewComponent } from './overview/overview.component';
 import { BannedWebsiteComponent } from './banned-website/banned-website.component';
+import { RoutGuardService } from './_services/rout-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'Dashboard', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'Dashboard', component:HomeComponent},
-  { path: 'listComputers', component:ListComputerComponent},
-  { path: 'computerDetail', component:ComputerDetailComponent},
-  { path: 'setting', component:SettingComponent},
-  { path: 'Thong-ke', component : OverviewComponent},
-  { path: 'Cac-website-cam', component : BannedWebsiteComponent},
-  { path: 'Thong-tin-nhan-vien/:id', component : ComputerDetailComponent},
+  { path: 'listComputers', component:ListComputerComponent, canActivate:[RoutGuardService]},
+  { path: 'computerDetail', component:ComputerDetailComponent, canActivate:[RoutGuardService]},
+  { path: 'Thong-ke', component : OverviewComponent, canActivate:[RoutGuardService]},
+  { path: 'Cac-website-cam', component : BannedWebsiteComponent, canActivate:[RoutGuardService]},
+  { path: 'Thong-tin-nhan-vien/:id', component : ComputerDetailComponent, canActivate:[RoutGuardService]},
   
 
 ];

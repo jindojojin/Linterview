@@ -11,7 +11,6 @@ import { ComputerDetailComponent } from './computer-detail/computer-detail.compo
 import { ComputerCardComponent } from './list-computer/computer-card/computer-card.component';
 import { AdminManagerService } from './_services/admin-manager.service';
 import { LimitTextPipe } from './pipe/limit.pipe';
-import { SettingComponent } from './setting/setting.component';
 import { OverviewComponent } from './overview/overview.component';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +22,8 @@ import { IsLoginPipe } from './pipe/is-login.pipe';
 import { UserService } from './_services/user.service';
 import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
 import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider,LoginOpt} from "angularx-social-login";
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+
 
 const googleLoginOptions: LoginOpt = {
   scope: 'profile email'
@@ -55,7 +56,6 @@ export function provideConfig() {
     ComputerDetailComponent,
     ComputerCardComponent,
     LimitTextPipe,
-    SettingComponent,
     OverviewComponent,
     BannedWebsiteComponent,
     TimeVietNamPipe,
@@ -69,7 +69,8 @@ export function provideConfig() {
     NgbModule,
     FormsModule,ReactiveFormsModule,
     ClipboardModule,
-    SocialLoginModule
+    SocialLoginModule,
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [AdminManagerService,UserService,{
     provide: AuthServiceConfig,

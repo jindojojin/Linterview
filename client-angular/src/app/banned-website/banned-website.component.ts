@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminManagerService } from '../_services/admin-manager.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-banned-website',
@@ -8,12 +9,14 @@ import { AdminManagerService } from '../_services/admin-manager.service';
 })
 export class BannedWebsiteComponent implements OnInit {
 
-  constructor(private admin_service:AdminManagerService) { }
+  constructor(private admin_service:AdminManagerService,private spiner: Ng4LoadingSpinnerService) { }
   listWebs=[];
   ngOnInit() {
+    this.spiner.show();
     this.admin_service.getListWeb().then(r=>{
       console.log(r);
       if(r!=null) this.listWebs = r;
+      this.spiner.hide();
     }).catch(e=> console.log(e))
   }
   deleteRow(i){
@@ -33,8 +36,10 @@ export class BannedWebsiteComponent implements OnInit {
   }
 
   submitNewList(){
+    this.spiner.show();
     this.admin_service.updateListWeb({list:this.listWebs}).then(r=>{
       console.log(r);
+      this.spiner.hide();
       window.alert("Cập nhập thành công");}).catch(e=>window.alert("Hệ thống đã xảy ra sự cố, hãy thử lại!"))
   }
 

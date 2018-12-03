@@ -3,7 +3,9 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { UserService } from '../_services/user.service';
 import { setCookie } from '../_services/Cookies';
 import { AuthService,SocialUser } from "angularx-social-login";
-import { FacebookLoginProvider, GoogleLoginProvider, LinkedInLoginProvider } from "angularx-social-login";
+import { GoogleLoginProvider} from "angularx-social-login";
+import { Router } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-login',
@@ -12,9 +14,7 @@ import { FacebookLoginProvider, GoogleLoginProvider, LinkedInLoginProvider } fro
 })
 export class LoginComponent implements OnInit {
   formLogin: FormGroup;
-  private user: SocialUser;
-  private loggedIn: boolean;
-  constructor(private userservice: UserService,private authService: AuthService) {
+  constructor(private userservice: UserService,private authService: AuthService,private route: Router,private spiner: Ng4LoadingSpinnerService) {
     this.formLogin = new FormGroup({
       username: new FormControl(),
       password:new FormControl()
@@ -22,21 +22,20 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = (user != null);
-    });
   }
 
   login(){
     console.log(this.formLogin.value);
+    this.spiner.show();
     this.userservice.login(this.formLogin.value).then(r=>{
+      this.spiner.hide();
       if(!r) window.alert("Tên đăng nhập hoặc mật khẩu không đúng!")
       else{
       setCookie("userID",r.userID,2);
       setCookie("tk",r.tk,2);
       setCookie("name",r.name,2);
       window.location.reload();
+      this.route.navigate(['Dashboard']);
       }
     }).catch(e=>{
       window.alert("Tên đăng nhập hoặc mật khẩu không đúng!")
@@ -44,31 +43,21 @@ export class LoginComponent implements OnInit {
   }
 
   signInWithGoogle(){
+    this.spiner.show();
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(res=>{
       // console.log(r.idToken);
       this.userservice.loginWithGoole({t:res.idToken}).then(r=>{
+        this.spiner.hide();
         console.log(r);
         setCookie("userID",r.userID,2);
         setCookie("tk",r.tk,2);
         setCookie("name",r.name,2);
         window.location.reload();
+        this.route.navigate(['Dashboard']);
       }).catch(e=>{
-        window.alert("Tên đăng nhập hoặc mật khẩu không đúng!")
+        window.alert("Máy chủ không phản hồi!")
       })
     }).catch(err=> window.alert("Đăng nhập bằng google không thành công :( !"));
   }
-
-  // signInWithFB(): void {
-  //   this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-  // }
-  
-  // signInWithLinkedIn(): void {
-  //   this.authService.signIn(LinkedInLoginProvider.PROVIDER_ID);
-  // }  
-
-  signOut(): void {
-    this.authService.signOut();
-  }
-
 
 }

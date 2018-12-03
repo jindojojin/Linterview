@@ -8,7 +8,6 @@ import { myWebsiteDomain } from './config';
 export class AdminManagerService {
 
   constructor(private http: Http) { 
-    setCookie("userID","5bf3ec04e7179a56e21350f3",1);
   }
   getComputers() {
     var url = myWebsiteDomain + '/admin/listComputers';

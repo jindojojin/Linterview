@@ -26,6 +26,7 @@
     "chart.js": "^2.7.3",
     "core-js": "^2.5.4",
     "jquery": "^3.3.1",
+    "ng4-loading-spinner": "^1.2.3",
     "ngx-bootstrap": "^3.1.2",
     "ngx-clipboard": "^11.1.9",
     "popper.js": "^1.14.5",

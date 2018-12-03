@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminManagerService } from '../_services/admin-manager.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-list-computer',
@@ -9,11 +10,12 @@ import { AdminManagerService } from '../_services/admin-manager.service';
 export class ListComputerComponent implements OnInit {
 
   list_computers: any[] = [];
-  constructor(private admin: AdminManagerService) {
-
+  constructor(private admin: AdminManagerService,private spinnerService: Ng4LoadingSpinnerService) {
+    this.spinnerService.show();
     this.admin.getComputers().then(r => {
       console.log(r);
       this.list_computers = r;
+      this.spinnerService.hide();
     }
     ).catch(e => console.log(e))
   }
