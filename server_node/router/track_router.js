@@ -46,6 +46,17 @@ var track_router = {
             res.statusCode = 401;
             res.send();
         })
+    },
+    checkKilled: function(req,res){
+        console.log("Track is killed!")
+        db.killTrack(req.params.id).then(r=>{
+            res.statusCode = 200;
+            res.send();
+        }).catch(e =>{
+            console.log(e);
+            res.statusCode = 401;
+            res.send();
+        })
     }
 }
 module.exports = track_router;

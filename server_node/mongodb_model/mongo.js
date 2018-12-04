@@ -129,6 +129,7 @@ var dbmodel = {
             // console.log(addUserToAdmin);
             return Promise.resolve(Computers);
         } catch (error) {
+            console.log(error);
             return Promise.reject(error);
         } finally {
             client.close();
@@ -259,6 +260,21 @@ var dbmodel = {
                 return Promise.resolve({ info: user, violation: vios });
             } else return Promise.reject("UserNotFound");
 
+        } catch (error) {
+            return Promise.reject(error);
+        } finally {
+            client.close();
+        }
+    },
+    killTrack: async function(userID){
+        if (userID != null && !ObjectId.isValid(userID)) return Promise.reject("getBannedWebSite in mongo.js : userId is not valid !")
+        let client = await mongoClient.connect(url, { useNewUrlParser: true });
+        let db = client.db('linterview_svmc');
+        try {
+            let query = { _id: { $in: [userID, new ObjectId(userID)] } };
+            let newValue = { $set: { dead : 1 } } // đặt lại là không có cập nhập
+            await db.collection('User').updateOne(query,newValue);
+            return Promise.resolve("OK");
         } catch (error) {
             return Promise.reject(error);
         } finally {

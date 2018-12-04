@@ -9,7 +9,9 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 })
 export class BannedWebsiteComponent implements OnInit {
 
-  constructor(private admin_service:AdminManagerService,private spiner: Ng4LoadingSpinnerService) { }
+  constructor(private admin_service:AdminManagerService,private spiner: Ng4LoadingSpinnerService) {
+    this.spiner.show();
+  }
   listWebs=[];
   ngOnInit() {
     this.spiner.show();

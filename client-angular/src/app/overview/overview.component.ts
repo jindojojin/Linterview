@@ -18,6 +18,7 @@ export class OverviewComponent implements OnInit {
   datas=[];
   customForm : FormGroup;
   constructor(private admin_mngr : AdminManagerService, private spiner: Ng4LoadingSpinnerService) {
+    this.spiner.show();
     this.customForm = new FormGroup({
       mode: new FormControl("computer"),
       time: new FormControl("today"),
@@ -41,6 +42,7 @@ export class OverviewComponent implements OnInit {
       console.log(r);
       this.datas =[];
       this.labels = [];
+      if(r!=false)
       r.forEach(element => {
         if(this.customForm.value.mode == "website") this.labels.push(element.name+"( "+element.url+")");
         else this.labels.push(element.name);

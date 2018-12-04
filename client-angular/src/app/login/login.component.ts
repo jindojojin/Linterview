@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
     console.log(this.formLogin.value);
     this.spiner.show();
     this.userservice.login(this.formLogin.value).then(r=>{
-      this.spiner.hide();
       if(!r) window.alert("Tên đăng nhập hoặc mật khẩu không đúng!")
       else{
       setCookie("userID",r.userID,2);
@@ -40,6 +39,7 @@ export class LoginComponent implements OnInit {
     }).catch(e=>{
       window.alert("Tên đăng nhập hoặc mật khẩu không đúng!")
     })
+    this.spiner.hide();
   }
 
   signInWithGoogle(){
@@ -47,7 +47,11 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(res=>{
       // console.log(r.idToken);
       this.userservice.loginWithGoole({t:res.idToken}).then(r=>{
-        this.spiner.hide();
+        if(r.tk == undefined) {
+          this.spiner.hide();
+          window.alert("Đăng nhập bằng google không thành công :( !");
+          return;
+        }
         console.log(r);
         setCookie("userID",r.userID,2);
         setCookie("tk",r.tk,2);
@@ -58,6 +62,7 @@ export class LoginComponent implements OnInit {
         window.alert("Máy chủ không phản hồi!")
       })
     }).catch(err=> window.alert("Đăng nhập bằng google không thành công :( !"));
+    this.spiner.hide();
   }
 
 }

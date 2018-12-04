@@ -14,17 +14,15 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'Dashboard', component:HomeComponent},
-  { path: 'listComputers', component:ListComputerComponent, canActivate:[RoutGuardService]},
-  { path: 'computerDetail', component:ComputerDetailComponent, canActivate:[RoutGuardService]},
+  { path: 'Danh-sach-nhan-vien', component:ListComputerComponent, canActivate:[RoutGuardService]},
   { path: 'Thong-ke', component : OverviewComponent, canActivate:[RoutGuardService]},
   { path: 'Cac-website-cam', component : BannedWebsiteComponent, canActivate:[RoutGuardService]},
   { path: 'Thong-tin-nhan-vien/:id', component : ComputerDetailComponent, canActivate:[RoutGuardService]},
-  
-
+  {path:'**',redirectTo:'Dashboard',pathMatch:'full'}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

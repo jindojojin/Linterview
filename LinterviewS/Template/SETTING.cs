@@ -25,6 +25,6 @@ namespace LinterviewS.Template
         public string REGISTER_SETUP_NAME { get; set; } // where to get setup infomation when startup
         public string REGISTER_USER_ID_KEY { get; set; }
         public string REGISTER_USER_ADMIN_KEY { get; set; }
-        public string I_AM_DEAD { get; internal set; }
+        public string I_AM_DEAD { get; set; }
     }
 }

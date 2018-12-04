@@ -26,11 +26,6 @@ namespace LinterviewS
                 }
                 else
                 {
-                    if(GLOBAL_INSTANCE.Instance.DARKLIST == null)
-                    {
-                        Thread.Sleep(SETTING.Instance.TIME_TO_RECHECK);
-                        continue;
-                    }
                     this.getDNS();
                 }
                 Thread.Sleep(SETTING.Instance.TIME_TO_RECHECK);
@@ -38,6 +33,7 @@ namespace LinterviewS
         }
         private void getDNS()
         {
+            if(GLOBAL_INSTANCE.Instance.DARKLIST == null) { Thread.Sleep(2 * SETTING.Instance.TIME_TO_RECHECK); return; }
             if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE)  Console.WriteLine("getting dns");
             Process p = new Process();
             p.StartInfo.FileName = "ipconfig";

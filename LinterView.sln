@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28307.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinterViewTrack", "LinterViewTrack\LinterViewTrack.csproj", "{DDE5060F-072A-4D40-A1B9-E2402FDD3F38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinterviewS", "LinterviewS\LinterviewS.csproj", "{23E3F277-6328-407A-ADAB-CB47CDE78892}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{7808F984-0462-475E-8DBE-3402ECA7C271}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,12 @@ Global
 		{DDE5060F-072A-4D40-A1B9-E2402FDD3F38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDE5060F-072A-4D40-A1B9-E2402FDD3F38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDE5060F-072A-4D40-A1B9-E2402FDD3F38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23E3F277-6328-407A-ADAB-CB47CDE78892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23E3F277-6328-407A-ADAB-CB47CDE78892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23E3F277-6328-407A-ADAB-CB47CDE78892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23E3F277-6328-407A-ADAB-CB47CDE78892}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7808F984-0462-475E-8DBE-3402ECA7C271}.Debug|Any CPU.ActiveCfg = Debug
+		{7808F984-0462-475E-8DBE-3402ECA7C271}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

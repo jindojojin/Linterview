@@ -15,9 +15,9 @@ export class ListComputerComponent implements OnInit {
     this.admin.getComputers().then(r => {
       console.log(r);
       this.list_computers = r;
-      this.spinnerService.hide();
     }
     ).catch(e => console.log(e))
+    this.spinnerService.hide();
   }
 
   ngOnInit() {

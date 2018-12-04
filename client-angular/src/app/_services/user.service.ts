@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { myWebsiteDomain } from '../config';
+import { myWebsiteDomain } from './config';
 import { deleteAllCookies } from './Cookies';
 
 @Injectable({

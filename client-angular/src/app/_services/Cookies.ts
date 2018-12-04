@@ -38,3 +38,9 @@ export function setCookie(cname, cvalue, exdays) {
 	var expires = "expires=" + d.toUTCString();
 	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
+
+export function getCookieObject(){
+	let userID=getCookie("userID");
+	let tk=getCookie("tk");
+	return {userID:userID,tk:tk,data:''}
+}

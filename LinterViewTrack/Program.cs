@@ -4,14 +4,15 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Threading;
-using LinterViewTrack.Template;
+using LinterviewS.Template;
 using Microsoft.Win32;
 
-namespace LinterViewTrack
+namespace LinterviewS
 {
     class Program
     {
         static bool isNewSession;
+
         static void Main(string[] args)
         {
             isNewSession = true;
@@ -63,20 +64,24 @@ namespace LinterViewTrack
 
         static void setupApplication()
         {
-            SETTING.Instance.ServerUri = "http://localhost:3000/";
-            SETTING.Instance.TIME_TO_RECHECK = 5000;
-            SETTING.Instance.TIME_TO_RECONNECT = 10000;
-            SETTING.Instance.TIME_TO_SEND_ALIVE_SIGNAL = 5000;
+            SETTING.Instance.ServerUri = "https://linterview.herokuapp.com/";
+            SETTING.Instance.TIME_TO_RECHECK = 10000;
+            SETTING.Instance.TIME_TO_RECONNECT = 5000;
+            SETTING.Instance.TIME_TO_SEND_ALIVE_SIGNAL = 10000;
             SETTING.Instance.SnitchUri = "/iamsorry";
             SETTING.Instance.AliveUri = "/iamalive/";
             SETTING.Instance.SignUpUri = "/signupTrack";
             SETTING.Instance.GetDarkListUri = "/listWebsiteBanned/";
-            SETTING.Instance.REGISTER_SETUP_NAME = "LINTERVIEW_SS";
+            SETTING.Instance.I_AM_DEAD = "/iamdead/";
+            SETTING.Instance.REGISTER_SETUP_NAME = "NLOLPLALRLTLY";
             SETTING.Instance.REGISTER_USER_ADMIN_KEY = "adhkeynopar";
             SETTING.Instance.REGISTER_USER_ID_KEY = "hkeynopar";
+#if DEBUG
             SETTING.Instance.FLAG_IS_IN_DEBUG_MODE = true;
-            //if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("");
-            
+# else
+            SETTING.Instance.FLAG_IS_IN_DEBUG_MODE = false;
+#endif//if (SETTING.Instance.FLAG_IS_IN_DEBUG_MODE) Console.WriteLine("");
+
         }
 
         static void checkAndWriteRegisterKey()

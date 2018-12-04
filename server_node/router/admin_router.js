@@ -92,7 +92,10 @@ var admin_router = {
         }
     },
     sendListComputer: function (req, res) {
-        db.getListComputers(req.cookies.userID).then(r => {
+        console.log("đã vào chỗ xem danh sách nhân viên");
+        // console.log(req.body);
+        if(secure.verifyUserToken(req.body.tk)== null) {res.statusCode = 401; res.send(); return;}
+        db.getListComputers(req.body.userID).then(r => {
             console.log("Đã gửi danh sách nhân viên");
             res.statusCode = 200;
             res.send(JSON.stringify(r));
@@ -104,7 +107,8 @@ var admin_router = {
 
     sendOverViewByUser: function (req, res) {
         console.log(req.body);
-        db.getOverViewByUser(req.cookies.userID, req.body.fromDate, req.body.toDate).then(r => {
+        if(secure.verifyUserToken(req.body.tk)== null) {res.statusCode = 401; res.send(); return;}
+        db.getOverViewByUser(req.body.userID, req.body.data.fromDate, req.body.data.toDate).then(r => {
             console.log("Đã xử lý yêu cầu xem thống kê theo các máy");
             res.statusCode = 200;
             console.log(r);
@@ -119,7 +123,8 @@ var admin_router = {
 
     sendOverViewByWebsite: function (req, res) {
         // console.log(req.body);
-        db.getOverViewByWebsite(req.cookies.userID, req.body.fromDate, req.body.toDate).then(r => {
+        if(secure.verifyUserToken(req.body.tk)== null) {res.statusCode = 401; res.send(); return;}
+        db.getOverViewByWebsite(req.body.userID, req.body.data.fromDate, req.body.data.toDate).then(r => {
             console.log("Đã xử lý yêu cầu xem thống kê theo website");
             res.statusCode = 200;
             console.log(r);
@@ -133,7 +138,8 @@ var admin_router = {
     },
     sendListWebsite: function (req, res) {
         // console.log(req.body);
-        db.getBannedWebSites(req.cookies.userID, null).then(r => {
+        if(secure.verifyUserToken(req.body.tk)== null) {res.statusCode = 401; res.send(); return;}
+        db.getBannedWebSites(req.body.userID, null).then(r => {
             console.log("Đã xử lý yêu cầu xem website");
             res.statusCode = 200;
             console.log(r);
@@ -146,8 +152,10 @@ var admin_router = {
 
     },
     addListWebsite: function (req, res) {
-        console.log(req.body);
-        db.updateListBannedWebsite(req.cookies.userID, req.body.list).then(r => {
+        // console.log(req.body);
+        if(secure.verifyUserToken(req.body.tk)== null) {res.statusCode = 401; res.send(); return;}
+
+        db.updateListBannedWebsite(req.body.userID, req.body.data.list).then(r => {
             console.log("Đã xử lý yêu cầu update website");
             res.statusCode = 201;
             console.log(r);
@@ -160,6 +168,9 @@ var admin_router = {
 
     sendUserInfo: function (req, res) {
         console.log(req.body);
+        
+        if(secure.verifyUserToken(req.body.tk)== null) {res.statusCode = 401; res.send(); return;}
+
         db.getComputerInfo(req.params.id, req.params.firstID, req.params.number).then(r => {
             console.log("Đã xử lý yêu cầu xem info computer");
             res.statusCode = 200;
@@ -170,10 +181,6 @@ var admin_router = {
             res.send();
         })
     },
-    googleHandler(req,res){
-        console.log(req);
-        console.log(req.body)
-    }
 
 }
 module.exports = admin_router;
