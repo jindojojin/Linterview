@@ -110,6 +110,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
         "Release"
@@ -117,7 +125,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\Setup.msi"
+        "OutputFilename" = "8:Release\\LinterviewTrack.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -134,6 +142,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
     }
@@ -141,20 +157,6 @@
     {
         "CustomAction"
         {
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_361AA95144384D6584399ED0837F5B06"
-            {
-            "Name" = "8:Primary output from LinterViewTrack (Active)"
-            "Condition" = "8:"
-            "Object" = "8:_536650985BCE4DE4AFBC79A56F7315BD"
-            "FileType" = "3:2"
-            "InstallAction" = "3:2"
-            "Arguments" = "8:"
-            "EntryPoint" = "8:"
-            "Sequence" = "3:1"
-            "Identifier" = "8:_24A93A8F_F437_4C2C_BDB5_369824E21E27"
-            "InstallerClass" = "11:FALSE"
-            "CustomActionData" = "8:"
-            }
         }
         "DefaultFeature"
         {
@@ -334,7 +336,7 @@
             {
             "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:TARGETDIR"
@@ -370,7 +372,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:LinterViewTrack"
         "ProductCode" = "8:{F3877877-8B1E-4810-BEA9-EA3E306E9CC8}"
-        "PackageCode" = "8:{44CD5828-4539-4DEE-824E-44C36CC49EB8}"
+        "PackageCode" = "8:{6EC553D6-CF83-44D0-8820-FF8E732C6537}"
         "UpgradeCode" = "8:{25596C3B-E92B-40ED-94E7-30BC30C25023}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -393,7 +395,7 @@
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:0"
         "PreBuildEvent" = "8:"
-        "PostBuildEvent" = "8:"
+        "PostBuildEvent" = "8:cscript.exe \"$(ProjectDir)EnableLaunchApplication.js\" \"$(BuiltOuputPath)\""
         "RunPostBuildEvent" = "3:0"
         }
         "Registry"
@@ -623,8 +625,8 @@
                             "Type" = "3:15"
                             "ContextData" = "8:"
                             "Attributes" = "3:0"
-                            "Setting" = "3:1"
-                            "Value" = "8:#1258"
+                            "Setting" = "3:2"
+                            "Value" = "8:Restart windows to start LinterViewTrack"
                             "DefaultValue" = "8:#1258"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -913,7 +915,7 @@
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
             "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
+            "Hidden" = "11:TRUE"
             "System" = "11:FALSE"
             "Permanent" = "11:FALSE"
             "SharedLegacy" = "11:FALSE"

@@ -1,7 +1,8 @@
 const express = require('express')
-
+var path = require('path')
 const app = express()
-const port = 3000
+const port = 3000;
+app.get('/download/LinterViewTrack',(req,res)=>res.sendFile(path.resolve('../router/LinterviewTrack.msi')));
 app.use((req,res,next)=>{
     // res.header('Access-Control-Allow-Origin','http://localhost:4200');
     res.header('Access-Control-Allow-Origin','https://linterview.github.io');
